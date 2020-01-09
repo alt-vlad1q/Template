@@ -1,9 +1,12 @@
 cmake_minimum_required(VERSION 3.13)
-project(sandbox)
+project(Template)
 
-set(CMAKE_CXX_STANDART 14)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_STANDART_REQUIRED ON)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_CXX_FLAGS_RELEASE  "-fPIC -O2 -Wl,-rpath=../lib -Wall -Werror=unused-result -Werror=return-type")
 set(CMAKE_CXX_FLAGS_DEBUG    "${CMAKE_CXX_FLAGS_RELEASE} -g")
@@ -18,5 +21,12 @@ find_package(Boost REQUIRED)
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${Boost_INCLUDE_DIRS})
 
-find_package(Qt5 REQUIRED COMPONENTS Core)
-target_link_libraries(${PROJECT_NAME} Qt5::Core)
+find_package(Qt5 REQUIRED COMPONENTS Core Quick)
+target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Quick)
+
+#find_program(WINDEPLOYQT_EXECUTABLE NAMES windeployqt HINTS ${QTDIR} ENV QTDIR PATH_SUFFIXES bin)
+#add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+#COMMAND ${WINDEPLOYQT_EXECUTABLE} $<TARGET_FILE:${PROJECT_NAME}>)
+
+#add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+#COMMAND ${WINDEPLOYQT_EXECUTABLE} --qmldir ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
